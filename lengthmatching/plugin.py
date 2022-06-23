@@ -8,10 +8,10 @@ import wx.aui
 from wx import FileConfig
 
 import pcbnew
+
 from .dialog import DialogMain
-
 from .ontech.ontech import OnTech
-
+from.version import version
 
 class OnTechPlugin(pcbnew.ActionPlugin, object):
     config_file = os.path.join(os.path.dirname(__file__), '..', 'config.ini')
@@ -22,13 +22,13 @@ class OnTechPlugin(pcbnew.ActionPlugin, object):
         self.InitLogger()
         self.logger = logging.getLogger(__name__)
 
-        self.name = "OnTech"
+        self.name = "Length Matching"
         self.category = "Modify PCB"
         self.pcbnew_icon_support = hasattr(self, "show_toolbar_button")
         self.show_toolbar_button = True
         icon_dir = os.path.dirname(os.path.dirname(__file__))
         self.icon_file_name = os.path.join(icon_dir, 'icon.png')
-        self.description = "ONTECH Plugin"
+        self.description = "Length Matching Plugin"
         self.config = FileConfig(localFilename=self.config_file)
         
         self._pcbnew_frame = None
@@ -64,7 +64,7 @@ class OnTechPlugin(pcbnew.ActionPlugin, object):
             return
 
         data = OnTech(board)
-        dlg = DialogMain(self._pcbnew_frame, data)
+        dlg = DialogMain(self._pcbnew_frame, version, data)
     
         if dlg.ShowModal() == wx.ID_OK:
             
@@ -82,7 +82,7 @@ class OnTechPlugin(pcbnew.ActionPlugin, object):
         handler1 = logging.StreamHandler(sys.stderr)
         handler1.setLevel(logging.DEBUG)
 
-        log_file = os.path.join(os.path.dirname(__file__), "..", "ontech.log")
+        log_file = os.path.join(os.path.dirname(__file__), "..", "length-matching.log")
 
         # and to our error file
         handler2 = logging.FileHandler(log_file)

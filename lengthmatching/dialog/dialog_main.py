@@ -3,10 +3,10 @@ import wx.grid
 
 from . import dialog_base
 
-class DialogMain(dialog_base.DialogBase):
-    def __init__(self, parent, data):
-        dialog_base.DialogBase.__init__(self, parent)
-        self.SetTitle('OnTech v1.0')
+class DialogMain(dialog_base.LengthMatchingDialog):
+    def __init__(self, parent, version, data):
+        dialog_base.LengthMatchingDialog.__init__(self, parent)
+        self.SetTitle('Length Matching %s' % version)
         self.board = data.board
     
     def SetSizeHints(self, a, b, c=None):
@@ -15,16 +15,4 @@ class DialogMain(dialog_base.DialogBase):
         else:
             super(wx.Dialog, self).SetSizeHintsSz(a,b)
 
-    def OnInitDialog(self, event):
-        file_name = str(self.board.GetFileName())
-        index = file_name.rfind('/')
-        name = file_name[index+1:]
-        self.labelName.LabelText = name 
-
-    def OnShowClick(self, event):
-        txt = self.textInput.GetValue()
-        if txt == '':
-            self.labelStatus.LabelText = 'Please input text'
-        else:
-            self.labelStatus.LabelText = txt
 

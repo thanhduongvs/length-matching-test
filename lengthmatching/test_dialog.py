@@ -10,7 +10,7 @@ class MyApp(wx.App):
         #config = FileConfig(localFilename=config_file)
 
         #print(config_file)
-        self.frame = frame = DialogMain(None, OnTech(None))
+        self.frame = frame = DialogMain(None, "test", OnTech(None))
         if frame.ShowModal() == wx.ID_OK:
             print("Graceful Exit")
         frame.Destroy()
